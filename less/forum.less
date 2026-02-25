@@ -20,10 +20,10 @@
         display: none !important;
     }
 
-    // Keep tags top-right but buffer the title so long text wraps before hitting them
+    // Create a safe zone for the absolute tags so they never overlap the title
     .DiscussionListItem-content {
         .DiscussionListItem-title {
-            padding-right: 65px;
+            padding-right: 130px !important;
         }
     }
 
@@ -31,11 +31,31 @@
         position: absolute !important;
         top: 15px;
         right: 15px;
+        max-width: 120px;
+        display: flex;
+        justify-content: flex-end;
+        overflow: hidden;
+        white-space: nowrap;
+
+        // Prevent tags from pushing container vertically if they somehow wrap
+        >span {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    .DiscussionListItem-main {
+        width: 100% !important;
+    }
+
+    .DiscussionListItem-content {
+        padding-right: 15px !important;
     }
 
     .DiscussionListItem-info {
         display: flex;
         align-items: center;
+        width: 100% !important;
 
         >li.item-tags {
             order: 0;
@@ -43,7 +63,6 @@
 
         >li.item-terminalPost {
             order: 1;
-            flex-grow: 1;
         }
 
         >li.item-mobile-reply-count {
