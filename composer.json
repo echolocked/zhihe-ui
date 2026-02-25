@@ -1,0 +1,30 @@
+{
+    "name": "zhihe/ui",
+    "description": "Custom UI overrides for mobile discussion lists",
+    "type": "flarum-extension",
+    "keywords": [
+        "ui"
+    ],
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^1.8"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Zhihe UI",
+            "icon": {
+                "name": "fas fa-paint-brush",
+                "backgroundColor": "#e74c3c",
+                "color": "#fff"
+            }
+        },
+        "flarum-cli": {
+            "modules": {
+                "admin": false,
+                "forum": true,
+                "js": true,
+                "css": true
+            }
+        }
+    }
+}

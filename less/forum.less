@@ -1,0 +1,87 @@
+@media (min-width: 768px) {
+    .item-mobile-reply-count {
+        display: none !important;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .DiscussionListItem-count,
+    .DiscussionListItem-controls {
+        display: none !important;
+    }
+
+    .item-tags {
+        position: absolute !important;
+        top: 15px;
+        right: 15px;
+    }
+
+    .DiscussionListItem-info {
+        display: flex;
+        align-items: center;
+
+        >li.item-tags {
+            order: 0;
+        }
+
+        >li.item-terminalPost {
+            order: 1;
+            flex-grow: 1;
+        }
+
+        >li.item-excerpt {
+            order: 2;
+            flex-grow: 1;
+        }
+
+        >li.item-mobile-reply-count {
+            order: 3;
+        }
+
+        >li.item-discussion-views {
+            order: 4;
+        }
+
+        >li.item-subscription-count {
+            order: 5;
+        }
+
+        .item-mobile-reply-count,
+        .item-discussion-views,
+        .item-subscription-count {
+            background: transparent !important;
+            padding: 0 !important;
+            font-size: 14px !important;
+            margin-left: 10px !important;
+            margin-right: 0 !important;
+            margin-top: 0 !important;
+            color: var(--muted-color) !important;
+            position: static !important;
+            width: auto !important;
+            float: none !important;
+            display: inline-flex !important;
+            align-items: center;
+
+            .icon,
+            .fas,
+            .far {
+                display: inline-block !important;
+                margin-right: 4px !important;
+            }
+        }
+
+        .item-mobile-reply-count {
+
+            &.unread,
+            .unread {
+                font-weight: bold;
+                color: var(--heading-color) !important;
+            }
+        }
+    }
+
+    .item-subscription-count {
+        margin-right: 0 !important; // Last item, no margin
+    }
+}
