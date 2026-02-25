@@ -4,11 +4,27 @@
     }
 }
 
+// Global UI overrides (all viewports)
+.DiscussionListItem-info {
+
+    // Completely hide post excerpts (e.g., from flarum/sticky)
+    >li.item-excerpt {
+        display: none !important;
+    }
+}
+
 @media (max-width: 767px) {
 
     .DiscussionListItem-count,
     .DiscussionListItem-controls {
         display: none !important;
+    }
+
+    // Keep tags top-right but buffer the title so long text wraps before hitting them
+    .DiscussionListItem-content {
+        .DiscussionListItem-title {
+            padding-right: 65px;
+        }
     }
 
     .item-tags {
@@ -30,13 +46,9 @@
             flex-grow: 1;
         }
 
-        >li.item-excerpt {
-            order: 2;
-            flex-grow: 1;
-        }
-
         >li.item-mobile-reply-count {
             order: 3;
+            margin-left: auto !important; // Push all stats dynamically to the right edge
         }
 
         >li.item-discussion-views {
