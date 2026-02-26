@@ -15,4 +15,7 @@ return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/less/forum.less'),
+
+    (new Extend\User)
+        ->registerPreference('zhihe.postFontSize', null, 'normal'),
 ];
