@@ -1,5 +1,6 @@
 import app from 'flarum/forum/app';
-import { extend } from 'flarum/common/extend';
+import { extend, override } from 'flarum/common/extend';
+import DiscussionListState from 'flarum/forum/states/DiscussionListState';
 import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
 import DiscussionPage from 'flarum/forum/components/DiscussionPage';
 import TextEditor from 'flarum/common/components/TextEditor';
@@ -95,5 +96,21 @@ app.initializers.add('zhihe-ui', () => {
         items.add('bb-size',
             TextEditorButton.component({ title: '字号 [size]', icon: 'fas fa-text-height', onclick: bbWrap('[size=18]', '[/size]') }),
             300);
+    });
+
+    // --- Sort dropdown reordering: latest → newest → top → oldest ---
+    override(DiscussionListState.prototype, 'sortMap', function(original) {
+        const map = original();
+        const newMap = {};
+
+        if ('relevance' in map) newMap.relevance = map.relevance;
+        if ('latest' in map) newMap.latest = map.latest;
+        if ('newest' in map) newMap.newest = map.newest;
+
+        for (const key in map) {
+            if (!(key in newMap)) newMap[key] = map[key];
+        }
+
+        return newMap;
     });
 });
