@@ -98,6 +98,24 @@ app.initializers.add('zhihe-ui', () => {
             300);
     });
 
+    // --- fof/polls: fix missing m.redraw() + SubtreeRetainer bypass for multi-choice submit button ---
+    // Bug 1 (PostPoll.tsx:229-233): changeVote() sets pendingSubmit=true but never calls m.redraw().
+    // Bug 2 (addPollsToPost.tsx:30-45): CommentPost's SubtreeRetainer blocks re-renders unless poll
+    //   store data changes — but pendingSubmit is local component state, invisible to the retainer.
+    // Fix: on checkbox change inside a multi-choice poll, dirty poll.data.attributes with a timestamp
+    //   so the SubtreeRetainer sees a change, then call m.redraw() to show the submit button.
+    // Uses document-level event delegation (bubble phase) so changeVote() always runs first.
+    document.addEventListener('change', function(e) {
+        const input = e.target;
+        if (!input || input.type !== 'checkbox') return;
+        const postPoll = input.closest && input.closest('.Post-poll');
+        if (!postPoll) return;
+        const poll = app.store.getById('polls', postPoll.dataset.id);
+        if (!poll || !poll.allowMultipleVotes() || poll.canChangeVote()) return;
+        if (poll.data && poll.data.attributes) poll.data.attributes._zhihe_pending = Date.now();
+        m.redraw();
+    });
+
     // --- Sort dropdown reordering: latest → newest → top → oldest ---
     override(DiscussionListState.prototype, 'sortMap', function(original) {
         const map = original();
